@@ -11,6 +11,8 @@ abstract class SupportedApps
     protected $method = 'GET';
     protected $error;
 
+    protected const INVALID_RESPONSE_STRING = 'Received invalid response from server';
+
     public function appTest($url, $attrs = [], $overridevars=false)
     {
         if(empty($this->config->url)) {

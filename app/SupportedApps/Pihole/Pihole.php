@@ -14,6 +14,12 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
     public function test()
     {
         $test = parent::appTest($this->url('/api.php'));
+        if ($test->code === 200) {
+            if (!json_decode($test->response)) {
+                echo static::INVALID_RESPONSE_STRING;
+                return;
+            }
+        }
         echo $test->status;
     }
 
