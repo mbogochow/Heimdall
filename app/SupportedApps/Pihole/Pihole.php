@@ -13,7 +13,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
 
     public function test()
     {
-        $test = parent::appTest($this->url('/api.php'));
+        $test = $this->appTest($this->url('/api.php'));
         if ($test->code === 200) {
             if (!json_decode($test->response)) {
                 echo static::INVALID_RESPONSE_STRING . ' (check that URL ends in /admin)'; // TODO change to automatically correct for user
@@ -26,7 +26,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
     public function livestats()
     {
         $status = 'inactive';
-        $res = parent::execute($this->url('/api.php'));
+        $res = $this->execute($this->url('/api.php'));
         $details = json_decode($res->getBody());
 
         $data = [];
@@ -36,12 +36,11 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
             $data['ads_percentage_today'] = round($details->ads_percentage_today) . '%';
         }
 
-        return parent::getLiveStats($status, $data);
+        return $this->getLiveStats($status, $data);
         
     }
     public function url($endpoint)
     {
-        $api_url = parent::normaliseurl($this->config->url).$endpoint;
-        return $api_url;
+        return $this->normaliseurl($this->config->url) .$endpoint;
     }
 }
