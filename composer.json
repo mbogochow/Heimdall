@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "linuxserver/heimdall",
+    "description": "Heimdall Application Dashboard",
+    "keywords": ["heimdall", "dashboard"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -12,7 +12,8 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.5",
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
