@@ -27,7 +27,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
 
         if($details) {
             $data['ads_blocked_today'] = number_format($details->ads_blocked_today);
-            $data['ads_percentage_today'] = number_format($details->ads_percentage_today,1);
+            $data['ads_percentage_today'] = round($details->ads_percentage_today) . '%';
         }
 
         return parent::getLiveStats($status, $data);
