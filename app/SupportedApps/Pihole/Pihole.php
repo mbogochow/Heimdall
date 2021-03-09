@@ -15,7 +15,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
     {
         $test = $this->appTest($this->url('/api.php'));
         if ($test->code === 200) {
-            if (!json_decode($test->response)) {
+            if (!json_decode($test->response, false)) {
                 echo static::INVALID_RESPONSE_STRING . ' (check that URL ends in /admin)'; // TODO change to automatically correct for user
                 return;
             }
@@ -27,7 +27,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
     {
         $status = 'inactive';
         $res = $this->execute($this->url('/api.php'));
-        $details = json_decode($res->getBody());
+        $details = json_decode($res->getBody(), false);
 
         $data = [];
 
