@@ -16,7 +16,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
         $test = parent::appTest($this->url('/api.php'));
         if ($test->code === 200) {
             if (!json_decode($test->response)) {
-                echo static::INVALID_RESPONSE_STRING;
+                echo static::INVALID_RESPONSE_STRING . ' (check that URL ends in /admin)'; // TODO change to automatically correct for user
                 return;
             }
         }
