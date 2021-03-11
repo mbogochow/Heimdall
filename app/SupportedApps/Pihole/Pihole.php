@@ -1,13 +1,14 @@
 <?php namespace App\SupportedApps\Pihole;
 
-class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
-
+class Pihole extends \App\SupportedApps implements \App\EnhancedApps
+{
     public $config;
 
     //protected $login_first = true; // Uncomment if api requests need to be authed first
     //protected $method = 'POST';  // Uncomment if requests to the API should be set by POST
 
-    function __construct() {
+    function __construct()
+    {
         //$this->jar = new \GuzzleHttp\Cookie\CookieJar; // Uncomment if cookies need to be set
     }
 
@@ -16,7 +17,7 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
         $test = $this->appTest($this->url('/api.php'));
         if ($test->code === 200) {
             if (!json_decode($test->response, false)) {
-                echo static::INVALID_RESPONSE_STRING . ' (check that URL ends in /admin)'; // TODO change to automatically correct for user
+                echo static::INVALID_RESPONSE_STRING.' (check that URL ends in /admin)'; // TODO change to automatically correct for user
                 return;
             }
         }
@@ -31,16 +32,16 @@ class Pihole extends \App\SupportedApps implements \App\EnhancedApps {
 
         $data = [];
 
-        if($details) {
+        if ($details) {
             $data['ads_blocked_today'] = number_format($details->ads_blocked_today);
-            $data['ads_percentage_today'] = round($details->ads_percentage_today) . '%';
+            $data['ads_percentage_today'] = round($details->ads_percentage_today).'%';
         }
 
         return $this->getLiveStats($status, $data);
-        
     }
+
     public function url($endpoint)
     {
-        return $this->normaliseurl($this->config->url) .$endpoint;
+        return $this->normaliseurl($this->config->url).$endpoint;
     }
 }
