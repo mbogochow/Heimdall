@@ -14,11 +14,29 @@ class GitLab extends \App\SupportedApps implements \App\EnhancedApps
 
     public function test()
     {
-        if (empty($this->config->health_apikey)) {
-            echo 'Must provide API key';
-        } else {
+        $status = [];
+        if (!empty($this->config->health_apikey)) {
             $test = parent::appTest($this->url('/-/readiness?token='.$this->config->health_apikey.'&all=1'));
-            echo $test->status;
+            $status['health_apikey'] = $test->status;
+        }
+        if (!empty($this->config->private_apikey)) {
+            $call_header['headers'] = ['PRIVATE-TOKEN' => $this->config->private_apikey];
+            $test = parent::appTest($this->url('/api/v4/application/statistics'), $call_header);
+            $status['private_apikey'] = $test->status;
+            if ($test->code !== 200) {
+                $status['private_apikey'] .= ' (note token must be for Gitlab administrator)';
+            }
+        }
+
+        if (empty($status)) {
+            echo 'Must provide at least one API key';
+        } else {
+            $response = '';
+            foreach ($status as $key => $keyStatus) {
+                $response .= "Status '$key': $keyStatus\n";
+            }
+
+            echo $response;
         }
     }
 

@@ -14,7 +14,7 @@
     </div>
     <div class="input">
         <label>Private API-Read Token</label>
-        <small>User Settings &raquo; Access Tokens</small>
+        <small>(Admin User) User Settings &raquo; Access Tokens</small>
         @php
             $configKey = 'private_apikey';
         @endphp
