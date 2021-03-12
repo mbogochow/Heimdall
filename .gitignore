@@ -1,14 +1,3 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/.idea
-/.vagrant
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-
 ### macOS ###
 *.DS_Store
 .AppleDouble
@@ -104,6 +93,8 @@ fabric.properties
 ### Laravel template
 /vendor/
 node_modules/
+npm-debug.log
+yarn-error.log
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -116,8 +107,14 @@ public/hot
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
 public_html/hot
+public/js/app.js
+public/css/app.css
+public/mix-manifest.json
 
 storage/*.key
+Homestead.yaml
+Homestead.json
+/.vagrant
 .phpunit.result.cache
 
 ### Windows template
