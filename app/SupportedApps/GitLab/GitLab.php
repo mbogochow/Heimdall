@@ -14,7 +14,9 @@ class GitLab extends \App\SupportedApps implements \App\EnhancedApps
 
     public function test()
     {
-        if (!empty($this->config->health_apikey)) {
+        if (empty($this->config->health_apikey)) {
+            echo 'Must provide API key';
+        } else {
             $test = parent::appTest($this->url('/-/readiness?token='.$this->config->health_apikey.'&all=1'));
             echo $test->status;
         }
