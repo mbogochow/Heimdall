@@ -10,7 +10,7 @@
         @php
             $configKey = 'health_apikey';
         @endphp
-        {!! Form::text("config[$configKey]", null, array('placeholder' => 'Health Token', 'id' => $configKey, 'class' => 'form-control config-item', 'data-config' => $configKey)) !!}
+        {!! Form::text("config[$configKey]", (isset($item) ? $item->getconfig()->health_apikey : null), array('placeholder' => 'Health Token', 'id' => $configKey, 'class' => 'form-control config-item', 'data-config' => $configKey)) !!}
     </div>
     <div class="input">
         <label>Private API-Read Token</label>
@@ -18,7 +18,7 @@
         @php
             $configKey = 'private_apikey';
         @endphp
-        {!! Form::text("config[$configKey]", null, array('placeholder' => __('app.apps.apikey'), 'id' => $configKey, 'class' => 'form-control config-item', 'data-config' => $configKey)) !!}
+        {!! Form::text("config[$configKey]", (isset($item) ? $item->getconfig()->private_apikey : null), array('placeholder' => __('app.apps.apikey'), 'id' => $configKey, 'class' => 'form-control config-item', 'data-config' => $configKey)) !!}
     </div>
     <div class="input">
         <button style="margin-top: 32px;" class="btn test" id="test_config">Test</button>
