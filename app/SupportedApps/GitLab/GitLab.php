@@ -16,12 +16,12 @@ class GitLab extends \App\SupportedApps implements \App\EnhancedApps
     {
         $status = [];
         if (!empty($this->config->health_apikey)) {
-            $test = parent::appTest($this->url('/-/readiness?token='.$this->config->health_apikey.'&all=1'));
+            $test = $this->appTest($this->url('/-/readiness?token='.$this->config->health_apikey.'&all=1'));
             $status['health_apikey'] = $test->status;
         }
         if (!empty($this->config->private_apikey)) {
             $call_header['headers'] = ['PRIVATE-TOKEN' => $this->config->private_apikey];
-            $test = parent::appTest($this->url('/api/v4/application/statistics'), $call_header);
+            $test = $this->appTest($this->url('/api/v4/application/statistics'), $call_header);
             $status['private_apikey'] = $test->status;
             if ($test->code !== 200) {
                 $status['private_apikey'] .= ' (note token must be for Gitlab administrator)';
@@ -46,8 +46,8 @@ class GitLab extends \App\SupportedApps implements \App\EnhancedApps
         $data = [];
 
         if (!empty($this->config->health_apikey)) {
-            $res1 = parent::execute($this->url('/-/readiness?token='.$this->config->health_apikey.'&all=1'));
-            $details1 = json_decode($res1->getBody());
+            $res1 = $this->execute($this->url('/-/readiness?token='.$this->config->health_apikey.'&all=1'));
+            $details1 = json_decode($res1->getBody(), false);
             if ($details1) {
                 $data['status'] = $details1->status;
                 $status = $details1->status;
@@ -56,20 +56,19 @@ class GitLab extends \App\SupportedApps implements \App\EnhancedApps
 
         if (!empty($this->config->private_apikey)) {
             $call_header['headers'] = ['PRIVATE-TOKEN' => $this->config->private_apikey];
-            $res2 = parent::execute($this->url('/api/v4/application/statistics'), $call_header);
-            $details2 = json_decode($res2->getBody());
-            if ($details2 && isset($details2->projects) && isset($details2->active_users)) {
+            $res2 = $this->execute($this->url('/api/v4/application/statistics'), $call_header);
+            $details2 = json_decode($res2->getBody(), false);
+            if (isset($details2->projects, $details2->active_users) && $details2) {
                 $data['count_projects'] = $details2->projects;
                 $data['count_users'] = $details2->active_users;
             }
         }
 
-        return parent::getLiveStats($status, $data);
+        return $this->getLiveStats($status, $data);
     }
 
     public function url($endpoint)
     {
-        $api_url = parent::normaliseurl($this->config->url).$endpoint;
-        return $api_url;
+        return $this->normaliseurl($this->config->url).$endpoint;
     }
 }
